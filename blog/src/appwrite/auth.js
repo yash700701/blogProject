@@ -39,12 +39,11 @@ class AuthService {
         } catch (error) {
             throw error
         }
-        return null
     }
 
     async logout(){
         try {
-            return await this.account.deleteIdentity() 
+            await this.account.deleteSessions() 
         } catch (error) {
             return error
         }

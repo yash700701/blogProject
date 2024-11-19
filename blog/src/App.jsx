@@ -3,7 +3,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import authService from './appwrite/auth'
 import { login, logout } from './store/AuthSlice'
-import Header from './components/Header'
+import Header from './components/header/Header'
 import Fotter from './components/Fotter'
 import { Outlet } from 'react-router-dom'
 
@@ -29,7 +29,7 @@ function App() {
   return loading ? "Loading" : (
     <div className='text-red-700'>
       <Header/>
-      <Outlet/>
+        <Outlet/>
       <Fotter/>
     </div>
   )

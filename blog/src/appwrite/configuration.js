@@ -74,6 +74,7 @@ export class Service {
             return error
         }
     }
+    
     async getPosts(queries = [Query.equal("status", "active")]){
         try {
             return await this.databases.listDocuments(
@@ -113,6 +114,7 @@ export class Service {
     }
 
     getFilePreview(fileId){
+        // return url
         return this.bucket.getFilePreview(
             confi.appwriteBucketId,
             fileId
