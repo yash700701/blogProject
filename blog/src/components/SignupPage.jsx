@@ -3,7 +3,7 @@ import Signup from './Signup'
 
 function SignupPage() {
   return (
-    <div className='py-8'>
+    <div className=''>
         console.log("entered into signup page");
     <Signup/>
     </div>

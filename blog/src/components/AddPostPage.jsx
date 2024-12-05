@@ -4,7 +4,7 @@ import PostForm from './PostForm'
 
 function AddPostPage() {
   return (
-    <div className='py-8'>
+    <div className=''>
     <Container>
         <PostForm />
     </Container>
