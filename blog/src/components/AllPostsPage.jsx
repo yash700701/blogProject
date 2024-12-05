@@ -18,9 +18,9 @@ function AllPostsPage() {
   return (
     <div className='w-full my-10 px-5'>
     <Container>
-        <div className='grid sm:grid-cols-4'>
+        <div className='grid sm:grid-cols-2 lg:grid-cols-4'>
             {posts.map((post) => (
-                <div key={post.$id} className='p-4 w-80'>
+                <div key={post.$id} className='p-4'>
                     <PostCard {...post} />
                 </div>
             ))}

@@ -47,7 +47,7 @@ function PostPage() {
                     />
 
                     {isAuthor && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute right-0 top-12">
                             <Link to={`/edit-post/${post.$id}`}>
                                 <Bttn text="edit" bgColor="bg-green-500" className="mr-3">
                                     

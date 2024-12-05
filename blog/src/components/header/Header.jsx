@@ -47,7 +47,7 @@ function Header() {
 
               </Link> */}
           </div>
-          <ul className='flex text-sm sm:text-lg pr-2 ml-auto'>
+          <ul className='flex text-xs sm:text-lg pr-2 ml-auto'>
             {navItems.map((item) => 
             item.active ? (
               <li key={item.name}>
