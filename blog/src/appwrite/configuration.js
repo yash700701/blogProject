@@ -18,8 +18,8 @@ export class Service {
         try {
             return await this.databases.createDocument(
                 confi.appwriteDatabaseId, 
-                confi.appwriteCollectionId,
-                slug,
+                confi.appwriteCollectionId,    
+                slug,  //document id
                 {
                     title,
                     content,
@@ -29,7 +29,8 @@ export class Service {
                 } 
             )
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: createPost :: error", error);
+            
         }
     }
 
@@ -47,7 +48,7 @@ export class Service {
                 }
             )
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: updatePost :: error", error);
         }
     }
 
@@ -58,8 +59,10 @@ export class Service {
                 confi.appwriteCollectionId,
                 slug
             )
+            return true
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: deletePost :: error", error);
+            return false
         }
     }
 
@@ -71,19 +74,21 @@ export class Service {
                 slug
             )
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: getpost :: error", error);
+            return false
         }
     }
     
     async getPosts(queries = [Query.equal("status", "active")]){
-        try {
+        try {  // give all the posts in collection but we want only posts with active status - query - used when you have created index in article 
             return await this.databases.listDocuments(
                 confi.appwriteDatabaseId,
                 confi.appwriteCollectionId,
                 queries
             )
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: getPosts :: error", error);
+            return false
         }
     }
 
@@ -97,7 +102,8 @@ export class Service {
                 file
             )
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: uploadFile :: error", error);
+            return false
         }
     }
 
@@ -109,11 +115,12 @@ export class Service {
             )
             return true
         } catch (error) {
-            return error
+            console.log("Appwrite Service :: deleteFile :: error", error);
+            return false
         }
     }
 
-    getFilePreview(fileId){
+    async getFilePreview(fileId){
         // return url
         return this.bucket.getFilePreview(
             confi.appwriteBucketId,
@@ -121,8 +128,6 @@ export class Service {
         )
     }
 }
-
-
-
+ 
 const service = new Service()
 export default service 

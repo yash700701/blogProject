@@ -6,7 +6,7 @@ const Input = forwardRef( function Input({
     type = "text",
     className = "",
     ...props
-},ref){
+},ref){ 
     const id = useId()
     return (
         <div className='w-full'>
