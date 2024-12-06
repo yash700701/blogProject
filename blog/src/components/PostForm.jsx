@@ -46,6 +46,8 @@ function PostForm({ post }) {
     } else {
         console.log("new post - else condition");
         const file = await service.uploadFile(data.image[0]);
+        console.log(`file - ${file}`);
+        
         
         if (file) {
             console.log(`file ${JSON.stringify(file)}`);  
