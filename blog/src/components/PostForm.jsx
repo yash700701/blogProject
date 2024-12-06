@@ -8,7 +8,8 @@ import RTE from './RTE'
 import service from '../appwrite/configuration'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Service } from '../appwrite/configuration'
+
+
 
 
 function PostForm({ post }) {
@@ -23,6 +24,7 @@ function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+  
 
   const submit = async (data) => {
     console.log(`submit function called under create post data: ${data}`);
@@ -55,7 +57,7 @@ function PostForm({ post }) {
             data.featuredImage = fileId;
             
             console.log(userData);
-            console.log(userData.$id);
+            console.log(data);
             const dbPost = await service.createPost({ ...data, userId: userData.$id });
 
             if (dbPost) {
