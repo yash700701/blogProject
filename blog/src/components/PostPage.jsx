@@ -36,6 +36,32 @@ function PostPage() {
         });
     };
 
+    const [like, setLike] = useState(localStorage.getItem(`like`) == "true");
+    const toggleLike = ()=>{
+      if(like){
+          decLike();
+          setLike(false);
+          localStorage.setItem(`like`, "false");
+        }else{ 
+          incLike();
+          setLike(true);
+          localStorage.setItem(`like`, "true");
+      }
+    }
+
+
+    const incLike = async () => {
+        const updatedLikeCount = (post.likeCount || 0) + 1; // Ensure likeCount is not undefined
+        const updatedPost = { ...post, likeCount: updatedLikeCount };
+        setPost(updatedPost); // Update local state for immediate feedback
+        await service.updatePost(post.$id, updatedPost); // Sync with server
+    };
+    const decLike = async ()=>{
+        const updatedLikeCount = (post.likeCount || 0) - 1;
+        const updatedPost = {...post, likeCount: updatedLikeCount};
+        setPost(updatedPost);
+        await service.updatePost( post.$id, updatedPost)
+    }
     return post ? (
         <div className="mb-10 mt-20 bg-slate-200 rounded-xl px-5 py-10 border-[1px] border-black mx-5">
             <Container>
@@ -64,6 +90,12 @@ function PostPage() {
                 </div>
                 <div className="browser-css text-zinc-800">
                     Content: {parse(post.content)}
+                </div>
+                <div className="grid grid-cols-2 w-16 pt-5">
+                    <button onClick={toggleLike}>
+                    {like ? "❤️" : "♡"}
+                    </button>
+                    <p className="pl-3">{post.likeCount}</p>
                 </div>
             </Container>
         </div>

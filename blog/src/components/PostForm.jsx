@@ -62,6 +62,7 @@ function PostForm({ post }) {
             data.name = localStorage.getItem("userName");
             const now = new Date();
             data.date = now.toString()
+            data.likeCount = 0;
              
             const dbPost = await service.createPost(data);
             console.log(`new data ${JSON.stringify(data)}`);
