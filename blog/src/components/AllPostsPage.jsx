@@ -7,20 +7,23 @@ import { useState } from 'react'
 
 function AllPostsPage() {
 
-
     const [posts, setPosts] = useState([])
-    useEffect(() => {}, [])
+
     service.getPosts([]).then((posts) => {
+        console.log(`posts fetch from databse in form of array ${JSON.stringify(posts)}`);
+        
         if (posts) {
             setPosts(posts.documents)
         }
     })
+    
   return (
-    <div className='w-full my-10 px-5'>
+    <div className='w-full mb-10 mt-20  px-5'>
     <Container>
-        <div className='grid sm:grid-cols-2 lg:grid-cols-4'>
+        <div className='grid sm:grid-cols-2'>
             {posts.map((post) => (
                 <div key={post.$id} className='p-4'>
+                    
                     <PostCard {...post} />
                 </div>
             ))}

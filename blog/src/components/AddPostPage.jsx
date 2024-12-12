@@ -4,7 +4,7 @@ import PostForm from './PostForm'
 
 function AddPostPage() {
   return (
-    <div className=''>
+    <div className='mt-10'>
     <Container>
         <PostForm />
     </Container>

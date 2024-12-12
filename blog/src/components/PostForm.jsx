@@ -24,14 +24,20 @@ function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+  if(userData){
+    localStorage.setItem("userId", `${userData.$id}`);
+    localStorage.setItem("userName", `${userData.name}`);
+    console.log( localStorage.getItem("userId"));
+  }
   
+    
 
   const submit = async (data) => {
-    console.log(`submit function called under create post data: ${data}`);
+    console.log(`submit function called under create post data: ${JSON.stringify(data)}`);
     
     if (post) {
         console.log("update post - if condition");
-        const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
+        const file = data.image[0] ? await service.uploadFile(data.image[0]) : null; //give file id
 
         if (file) {
             service.deleteFile(post.featuredImage);
@@ -47,18 +53,18 @@ function PostForm({ post }) {
         }
     } else {
         console.log("new post - else condition");
-        const file = await service.uploadFile(data.image[0]);
-        console.log(`file - ${file}`);
-        
-        
+        const file = await service.uploadFile(data.image[0]); //return $id
+   
         if (file) {
             console.log(`file ${JSON.stringify(file)}`);  
-            const fileId = file.$id;
-            data.featuredImage = fileId;
-            
-            console.log(userData);
-            console.log(data);
-            const dbPost = await service.createPost({ ...data, userId: userData.$id });
+            data.featuredImage = file.$id;
+            data.userId = localStorage.getItem("userId");
+            data.name = localStorage.getItem("userName");
+            const now = new Date();
+            data.date = now.toString()
+             
+            const dbPost = await service.createPost(data);
+            console.log(`new data ${JSON.stringify(data)}`);
 
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
@@ -90,7 +96,7 @@ function PostForm({ post }) {
 
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="grid sm:grid-cols-2 gap-10 my-10 mx-10 bg-slate-900 rounded-xl text-teal-100 p-5 ">
+    <form onSubmit={handleSubmit(submit)} className="grid sm:grid-cols-2 gap-10 mb-10 mt-20 mx-10 bg-slate-900 rounded-xl text-teal-100 p-5 ">
     <div className="w-full px-2">
         <Input
             label=" "

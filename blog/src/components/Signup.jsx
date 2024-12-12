@@ -25,6 +25,8 @@ function Signup() {
                 const userData = await authService.getCurrentUser()
                 if(userData) dispatch(authLogin(userData))
                     console.log("account created successfully : forward to home page");
+                    console.log(`received data by redux on signup ${userData}`);
+
                     navigate("/")
             }
         } catch (error) {

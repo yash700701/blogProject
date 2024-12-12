@@ -16,14 +16,16 @@ function Login() {
   console.log("entered into login form");
 
   const login = async (data)=>{
+    console.log(`login func called with data ${data}`);
+    
     setError("")
     try {
         const session = await authService.login(data)
       if(session){
         const userData = await authService.getCurrentUser()
-        console.log(userData);
         
         if(userData) dispatch(authLogin(userData))
+          console.log(`received data by redux on login ${userData}`);
         navigate("/")  
       }
     } catch (error) {

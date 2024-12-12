@@ -19,7 +19,7 @@ function Home() {
         console.log("Login to read posts")
         return (
             
-            <div className="w-full py-8 mt-4 text-center">
+            <div className="w-full  py-8 mt-10 text-center">
                 <Container>
                     <div className="flex flex-wrap">
                         <div className="p-2 w-full">
@@ -34,7 +34,7 @@ function Home() {
     }
     console.log("you are into allpost page")
     return (
-        <div className='w-full py-8'>
+        <div className='w-full mt-10 py-8'>
             
             <Container>
                 <div className='grid sm:grid-cols-2 lg:grid-4'>

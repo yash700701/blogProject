@@ -37,10 +37,10 @@ function Header() {
   ]
 
   return (
-    <header className='py-2 shadow  text-black bg-white opa'>
+    <header className='py-2 shadow fixed backdrop-blur-md top-0 w-full   text-black '>
       <Container>
         <nav className='flex'>
-          <div className='text-2xl  text-amber-800 font-bold px-2'>BlogApp</div>
+          <div className='text-3xl  text-blue-600 font-bold px-2'>BlogGram</div>
           <div className='mr-4'>
             {/* <Link to='/'>
               <Logo width='70px'   />

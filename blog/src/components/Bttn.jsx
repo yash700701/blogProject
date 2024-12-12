@@ -9,7 +9,7 @@ function Bttn({
     ...props
 }) {
   return (
-    <button type={type} className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`} {...props}>
+    <button type={type} className={`px-4 py-2 hover:bg-sky-800 rounded-lg ${bgColor} ${textColor} ${className}`} {...props}>
             {text}
     </button>
   )

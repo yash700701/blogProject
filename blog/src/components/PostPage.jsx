@@ -37,7 +37,7 @@ function PostPage() {
     };
 
     return post ? (
-        <div className="my-10 bg-slate-200 rounded-xl p-5 mx-5">
+        <div className="mb-10 mt-20 bg-slate-200 rounded-xl px-5 py-10 border-[1px] border-black mx-5">
             <Container>
                 <div className="w-full bg-slate-900 flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
@@ -60,10 +60,10 @@ function PostPage() {
                     )}
                 </div>
                 <div className="w-full mb-6 text-teal-900">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                    <h1 className="text-2xl font-bold">Title: {post.title}</h1>
                 </div>
                 <div className="browser-css text-zinc-800">
-                    {parse(post.content)}
+                    Content: {parse(post.content)}
                 </div>
             </Container>
         </div>
