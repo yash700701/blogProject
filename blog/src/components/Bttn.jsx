@@ -3,13 +3,13 @@ import React from 'react'
 function Bttn({
     text,
     type = "button",
-    bgColor = "bg-blue-600",
-    textColor = "text-white",
+    bgColor = "",
+    textColor = "text-black",
     className = '',
     ...props
 }) {
   return (
-    <button type={type} className={`px-4 py-2 hover:bg-sky-800 rounded-lg ${bgColor} ${textColor} ${className}`} {...props}>
+    <button type={type} className={`px-4 py-2 hover:bg-teal-500 border border-black rounded-lg ${bgColor} ${textColor} ${className}`} {...props}>
             {text}
     </button>
   )

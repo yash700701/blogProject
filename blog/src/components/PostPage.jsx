@@ -36,16 +36,18 @@ function PostPage() {
         });
     };
 
-    const [like, setLike] = useState(localStorage.getItem(`like`) == "true");
+    const [like, setLike] = useState(
+        post && post.$id ? localStorage.getItem('like' + post.$id) === "true" : false
+      );
     const toggleLike = ()=>{
       if(like){
           decLike();
           setLike(false);
-          localStorage.setItem(`like`, "false");
+          localStorage.setItem('like' + post.$id, "false");
         }else{ 
           incLike();
           setLike(true);
-          localStorage.setItem(`like`, "true");
+          localStorage.setItem('like' + post.$id, "true");
       }
     }
 
@@ -62,17 +64,57 @@ function PostPage() {
         setPost(updatedPost);
         await service.updatePost( post.$id, updatedPost)
     }
-    return post ? (
-        <div className="mb-10 mt-20 bg-slate-200 rounded-xl px-5 py-10 border-[1px] border-black mx-5">
-            <Container>
-                <div className="w-full bg-slate-900 flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={service.getFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
 
-                    {isAuthor && (
+    
+    
+    const [imageUrl, setImageUrl] = useState("");
+    useEffect(() => {
+        if (post && post.featuredImage) {
+            const fetchImage = async () => {
+                try {
+                    const url = await service.getFilePreview(post.featuredImage);
+                    setImageUrl(url);
+                } catch (error) {
+                    console.error("Error fetching image URL:", error);
+                    setImageUrl("/path/to/default/image.jpg");
+                }
+            };
+            fetchImage();
+        }
+    }, [post]);
+
+    console.log(`skdjbfafd ${imageUrl}`);
+    
+
+
+
+    
+    return post ? (
+        <div className="mb-10 mt-32 px-5 pb-5 shadow-[5px_5px_0px_0px_white] hover:shadow-[7px_7px_0px_0px_white] bg-white border-[2px] border-black mx-20">
+            <Container>
+                <div className="w-full flex mb-4 relative p-2">
+                    <img
+                        src={imageUrl}
+                        alt={post.title}
+                        className="h-60 w-96 object-cover mt-5"
+                    />
+                </div>
+                <div className="w-full mb-6 text-black">
+                    <h1 className="text-2xl font-bold">Title: {post.title}</h1>
+                </div>
+                <div className="browser-css text-zinc-800">
+                    Content: {parse(post.content)}
+                </div>
+                <div className="grid grid-cols-2 w-16 pt-5">
+                    <button onClick={toggleLike}>
+                    {like ? "❤️" : "♡"}
+                    </button>
+                    <p className="pl-1">{post.likeCount}</p>
+                </div>
+                <div>
+                    Liked By : {}
+                </div>
+                {isAuthor && (
                         <div className="absolute right-0 top-12">
                             <Link to={`/edit-post/${post.$id}`}>
                                 <Bttn text="edit" bgColor="bg-green-500" className="mr-3">
@@ -84,19 +126,6 @@ function PostPage() {
                             </Bttn>
                         </div>
                     )}
-                </div>
-                <div className="w-full mb-6 text-teal-900">
-                    <h1 className="text-2xl font-bold">Title: {post.title}</h1>
-                </div>
-                <div className="browser-css text-zinc-800">
-                    Content: {parse(post.content)}
-                </div>
-                <div className="grid grid-cols-2 w-16 pt-5">
-                    <button onClick={toggleLike}>
-                    {like ? "❤️" : "♡"}
-                    </button>
-                    <p className="pl-3">{post.likeCount}</p>
-                </div>
             </Container>
         </div>
     ) : null;

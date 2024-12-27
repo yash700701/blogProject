@@ -38,6 +38,28 @@ export class Service {
         }
     }
 
+    async addComment({text, slug, name, date, like, userId}){
+        try {
+            return await this.databases.createDocument(
+                confi.appwriteDatabaseId, 
+                confi.appwriteCollectionId,    
+                slug,  //document id
+                {
+                    text,
+                    name,
+                    userId,
+                    name,
+                    date,
+                    like
+                } 
+            )
+        } catch (error) {
+            console.log("Appwrite Service :: addcomment :: error", error);
+            alert("Appwrite Service :: addcomment :: error", error);
+            
+        }
+    }
+
     async updatePost(slug, {title, content, name, date, likeCount, featuredImage, status}){
         try {
             return await this.databases.updateDocument(

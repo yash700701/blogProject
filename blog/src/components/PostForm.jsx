@@ -58,18 +58,20 @@ function PostForm({ post }) {
         if (file) {
             console.log(`file ${JSON.stringify(file)}`);  
             data.featuredImage = file.$id;
-            data.userId = localStorage.getItem("userId");
-            data.name = localStorage.getItem("userName");
-            const now = new Date();
-            data.date = now.toString()
-            data.likeCount = 0;
-             
-            const dbPost = await service.createPost(data);
-            console.log(`new data ${JSON.stringify(data)}`);
+        }
+        data.userId = localStorage.getItem("userId");
+        data.name = localStorage.getItem("userName");
+        const now = new Date();
+        const dateString = now.toString();
+        const trimmedString = dateString.substring(0, dateString.indexOf("2024") + 4);
+        data.date = trimmedString
+        data.likeCount = 0;
+            
+        const dbPost = await service.createPost(data);
+        console.log(`new data ${JSON.stringify(data)}`);
 
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
+        if (dbPost) {
+            navigate(`/post/${dbPost.$id}`);
         }
     }
   };

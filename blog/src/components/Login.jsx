@@ -35,9 +35,9 @@ function Login() {
 
   return (
     <div
-    className='flex items-center text-teal-900 my-10 justify-center w-full'
+    className='flex items-center text-teal-900  mt-20 justify-center w-full'
     >
-        <div className={`mx-5 w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className={`mx-5 w-full border border-black max-w-lg  rounded-lg p-10 `}>
         <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         {/* <Logo width="100%" />logo */}
@@ -77,10 +77,11 @@ function Login() {
                 })} 
                 />
                 <Bttn
-                text={"sign"}
+                text={"sign in"}
                 type="submit"
                 className="w-full"
-                >Sign in
+                >
+                  Sign in
                 </Bttn>
             </div>
         </form>
