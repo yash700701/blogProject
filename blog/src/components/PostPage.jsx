@@ -82,7 +82,7 @@ function PostPage() {
         }
     }, [post]);
 
-    console.log(`skdjbfafd ${imageUrl}`);
+   
 
 
     if(userData){
@@ -92,6 +92,8 @@ function PostPage() {
       }
     
     const {register, handleSubmit} = useForm()
+    const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
     const submit = async (data)=>{
         data.name = localStorage.getItem("newUserName")
         data.like = 0
@@ -99,19 +101,19 @@ function PostPage() {
         const dateString = now.toString();
         const trimmedString = dateString.split(" ").slice(0, 5).join(" ");
         data.date = trimmedString
-        data.slug = post.$id
+        data.postid = post.$id
+        data.slug = generateId()
         data.userId = localStorage.getItem("newUserId")
         console.log(data.text);
         console.log(`name for comment ${data.name}`);
         console.log(data.date);
         console.log(data.userId);
+        console.log(data.postid);
         console.log(data.slug);
 
         const dbPost = await service.addComment(data)
         if(dbPost){
-            console.log(`comment post successfull ${dbPost}`);
-            alert("comment post successfully / refresh page")
-            
+            console.log(`comment post successfull ${dbPost}`);            
         }
         
     }
@@ -119,40 +121,47 @@ function PostPage() {
     const [comments, setComments] = useState([])
     useEffect(() => {
         if (slug) {
-            service.getcomments(slug).then((post) => {
-                if (post) setComments(Array(post));
+            console.log(`slug - ${slug}`);
+            service.getcomments().then((comment) => {
+                // console.log(`comments - ${typeof(comment)}`);
+                // const jsoncomment = Array(JSON.stringify(comment))
+                
+                if (comment && comment.length > 0){
+                    const filterComment = comment.filter(comment => comment.postid == slug)
+                    setComments(filterComment);
+                }
             });
         }
-    }, [slug, navigate]);
+    }, [slug, navigate, submit]);
 
     console.log(`comments array ${comments}`); 
     
     const [likeForComment, setLikeForComment] = useState(
-        post && post.$id ? localStorage.getItem('like' + comments.$id) === "true" : false
+        comments && comments.$id ? localStorage.getItem('likeForComment' + comments.$id) === "true" : false
       );
     const toggleLikeForComment = ()=>{
-      if(like){
+      if(likeForComment){
           decLikeForComment();
           setLikeForComment(false);
-          localStorage.setItem('like' + comments.$id, "false");
+          localStorage.setItem('likeForComment' + comments.$id, "false");
         }else{ 
           incLikeForComment();
           setLikeForComment(true);
-          localStorage.setItem('like' + comments.$id, "true");
+          localStorage.setItem('likeForComment' + comments.$id, "true");
       }
     }
 
     const incLikeForComment = async () => {
-        const updatedLikeCount = (post.likeCount || 0) + 1; // Ensure likeCount is not undefined
-        const updatedPost = { ...post, likeCount: updatedLikeCount };
-        setComments(updatedPost); // Update local state for immediate feedback
-        await service.updatePost(post.$id, updatedPost); // Sync with server
+        const updatedLikeCount = (comments.like || 0) + 1; // Ensure likeCount is not undefined
+        const updatedComments = { ...comments, like: updatedLikeCount };
+        setComments(updatedComments); // Update local state for immediate feedback
+        await service.updateComment(comments.$id, updatedComments); // Sync with server
     };
     const decLikeForComment = async ()=>{
-        const updatedLikeCount = (post.likeCount || 0) - 1;
-        const updatedPost = {...post, likeCount: updatedLikeCount};
-        setComments(updatedPost);
-        await service.updatePost( post.$id, updatedPost)
+        const updatedLikeCount = (comments.like || 0) - 1;
+        const updatedComments = {...comments, like: updatedLikeCount};
+        setComments(updatedComments);
+        await service.updateComment( comments.$id, updatedComments)
     }
     
     return post ? (
@@ -207,7 +216,7 @@ function PostPage() {
                 </form>
                 <div className="">
                     {comments.map((comment)=>(
-                        <div key={comment.$id} className="border border-black p-2 rounded-xl">
+                        <div key={comment.$id} className="border my-2 border-black p-2 rounded-xl">
                             <h1 className="text-teal-700">{comment.name}</h1>
                             <h1 className="text-teal-700">{comment.date}</h1>
                             <div className="grid grid-cols-10">

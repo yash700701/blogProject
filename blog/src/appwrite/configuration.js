@@ -38,7 +38,7 @@ export class Service {
         }
     }
 
-    async addComment({text, slug, name, date, like, userId}){
+    async addComment({text, slug, name, date, postid, like, userId}){
         try {
             return await this.databases.createDocument(
                 confi.appwriteDatabaseId, 
@@ -49,7 +49,8 @@ export class Service {
                     name,
                     userId,
                     date,
-                    like
+                    like,
+                    postid,
                 } 
             )
         } catch (error) {
@@ -80,6 +81,26 @@ export class Service {
         }
     }
 
+    async updateComment(slug, {text, name, date, like, postid, userId}){
+        try {
+            return await this.databases.updateDocument(
+                confi.appwriteDatabaseId,
+                confi.appwriteCollectionIdForComments,
+                slug,
+                {
+                    text,
+                    name,
+                    userId,
+                    date,
+                    like,
+                    postid,
+                }
+            )
+        } catch (error) {
+            console.log("Appwrite Service :: updateComment :: error", error);
+        }
+    }
+
     async deletePost(slug){
         try {
             await this.databases.deleteDocument(
@@ -107,13 +128,15 @@ export class Service {
         }
     }
 
-    async getcomments(slug){
+    async getcomments(queries = [Query.equal("status", "active")]){
         try {
-            return await this.databases.getDocument(
+            const response = await this.databases.listDocuments(
                 confi.appwriteDatabaseId,
                 confi.appwriteCollectionIdForComments,
-                slug
-            )
+                queries
+            );
+            console.log("Response from Appwrite:", response); // Inspect response structure
+            return response.documents || []; // Ensure you return the documents array
         } catch (error) {
             console.log("Appwrite Service :: getcomments :: error", error);
             return false

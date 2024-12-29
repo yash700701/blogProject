@@ -24,6 +24,12 @@ function Home() {
     const handleOnclickSignup = ()=>{
         navigate("/signup")
     }
+    const navigatetocreatepost = ()=>{
+        navigate("/add-post")
+    }
+    const navigatetoallposts = ()=>{
+        navigate("/all-posts")
+    }
   
     if (useSelector((state)=>state.auth.status) == false) {
         console.log("Login to read posts")
@@ -52,9 +58,16 @@ function Home() {
       className="h-96 border-[2px] bg-slate-200 border-black shadow-[5px_5px_0px_0px_white] hover:shadow-[7px_7px_0px_0px_white] object-cover"
       alt=""
     />
-    <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-xl font-bold">
+    <h1 className="absolute text-gray-500 top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
       Welcome to BlogGram
     </h1>
+    <h1 onClick={navigatetocreatepost} className="cursor-pointer absolute border shadow-[5px_5px_0px_0px_black] hover:shadow-[7px_7px_0px_0px_black] border-black px-2 text-black top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
+      Create a Post 
+    </h1>
+    <h1 onClick={navigatetoallposts} className="cursor-pointer absolute border shadow-[5px_5px_0px_0px_black] hover:shadow-[7px_7px_0px_0px_black] border-black px-2 text-black top-52 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
+      See All Blogs 
+    </h1>
+   
   </div>
 </div>
 

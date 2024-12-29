@@ -7,6 +7,17 @@ import bg from '../images/bg.jpg'
 
 function PostCard({$id, title, featuredImage, name, date, likeCount}) {
   const [imageUrl, setImageUrl] = useState("");
+  const [commentcount, setCommentCount] = useState(0)
+  useEffect(() => {
+    service.getcomments().then((comment) => {  
+        const filteredComment = comment.filter(comment => comment.postid == $id)      
+            setCommentCount(filteredComment.length)
+        });
+}, []);
+
+console.log(commentcount);
+
+
   useEffect(() => {
       if (featuredImage) {
           const fetchImage = async () => {
@@ -35,7 +46,7 @@ function PostCard({$id, title, featuredImage, name, date, likeCount}) {
       <p> <span className='text-blue-800'>{date}</span></p>
       <div className='flex gap-5'>
       <p className='pt-5 text-blue-800'>Likes : {likeCount}</p>
-      <p className='pt-5 text-blue-800'>Comments : {likeCount}</p>
+      <p className='pt-5 text-blue-800'>Comments : {commentcount}</p>
       </div>
     </div>
 </Link>

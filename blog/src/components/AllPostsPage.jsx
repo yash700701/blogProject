@@ -9,13 +9,15 @@ function AllPostsPage() {
 
     const [posts, setPosts] = useState([])
 
-    service.getPosts([]).then((posts) => {
-        console.log(`posts fetch from databse in form of array ${JSON.stringify(posts)}`);
-        
-        if (posts) {
-            setPosts(posts.documents)
-        }
-    })
+    useEffect(()=>{
+        service.getPosts([]).then((posts) => {
+            console.log(`posts fetch from databse in form of array ${JSON.stringify(posts)}`);
+            
+            if (posts) {
+                setPosts(posts.documents)
+            }
+        })
+    },[])
     
   return (
     <div className='w-full mb-10 mt-20  px-2'>
