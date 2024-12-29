@@ -42,13 +42,12 @@ export class Service {
         try {
             return await this.databases.createDocument(
                 confi.appwriteDatabaseId, 
-                confi.appwriteCollectionId,    
+                confi.appwriteCollectionIdForComments,    
                 slug,  //document id
                 {
                     text,
                     name,
                     userId,
-                    name,
                     date,
                     like
                 } 
@@ -104,6 +103,19 @@ export class Service {
             )
         } catch (error) {
             console.log("Appwrite Service :: getpost :: error", error);
+            return false
+        }
+    }
+
+    async getcomments(slug){
+        try {
+            return await this.databases.getDocument(
+                confi.appwriteDatabaseId,
+                confi.appwriteCollectionIdForComments,
+                slug
+            )
+        } catch (error) {
+            console.log("Appwrite Service :: getcomments :: error", error);
             return false
         }
     }

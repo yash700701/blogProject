@@ -18,7 +18,7 @@ function AllPostsPage() {
     })
     
   return (
-    <div className='w-full mb-10 mt-20  px-5'>
+    <div className='w-full mb-10 mt-20  px-2'>
     <Container>
         <div className='grid sm:grid-cols-2'>
             {posts.map((post) => (

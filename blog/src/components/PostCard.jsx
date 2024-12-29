@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import service from '../appwrite/configuration'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
+import bg from '../images/bg.jpg'
 
 function PostCard({$id, title, featuredImage, name, date, likeCount}) {
   const [imageUrl, setImageUrl] = useState("");
@@ -22,11 +23,10 @@ function PostCard({$id, title, featuredImage, name, date, likeCount}) {
   },[featuredImage]);
   return (
     <Link to={`/post/${$id}`}>
-    <div className='shadow-[5px_5px_0px_0px_white] mr-3 hover:shadow-[7px_7px_0px_0px_white] bg-white border-[2px] border-black p-4'>
+    <div className='shadow-[5px_5px_0px_0px_white] hover:shadow-[7px_7px_0px_0px_white] bg-white border-[2px] border-black p-3'>
       <div className='w-full justify-center mb-4'>
           <img src={imageUrl}  alt={title}
-          className='mt-5 h-60 w-96 object-cover' />
-
+          className=' h-60 w-full object-cover' />
       </div>
       <h2
       className=' pb-4 sm:text-3xl text-5xl font-bold text-black'

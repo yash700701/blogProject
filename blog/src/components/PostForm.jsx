@@ -24,14 +24,13 @@ function PostForm({ post }) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
+
   if(userData){
     localStorage.setItem("userId", `${userData.$id}`);
     localStorage.setItem("userName", `${userData.name}`);
     console.log( localStorage.getItem("userId"));
   }
   
-    
-
   const submit = async (data) => {
     console.log(`submit function called under create post data: ${JSON.stringify(data)}`);
     
@@ -99,7 +98,7 @@ function PostForm({ post }) {
 
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="grid sm:grid-cols-2 gap-10 mb-10 mt-20 mx-10 bg-slate-900 rounded-xl text-teal-100 p-5 ">
+    <form onSubmit={handleSubmit(submit)} className="grid sm:grid-cols-2 gap-10 mb-10 mt-20  rounded-xl text-teal-100 p-5 ">
     <div className="w-full px-2">
         <Input
             label=" "
